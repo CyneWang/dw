@@ -1,0 +1,136 @@
+<template>
+    <div class="home">
+        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+            <el-submenu index="1">
+                <template slot="title"><i class="el-icon-box white"></i>服务</template>
+                <el-submenu index="1-2">
+                    <template slot="title">性能查询</template>
+                    <el-menu-item index="1-2-1" ><router-link to="/home/service/disability/a">维度查询</router-link></el-menu-item>
+                </el-submenu>
+                <el-submenu index="1-3">
+                    <template slot="title">性能监控</template>
+                    <el-menu-item index="1-3-1">A维度</el-menu-item>
+                    <el-menu-item index="1-3-2"><router-link to="/home/construction">B维度</router-link></el-menu-item>
+                    <el-menu-item index="1-3-3">C维度</el-menu-item>
+                </el-submenu>
+                <el-submenu index="1-4">
+                    <template slot="title">性能对比</template>
+                    <el-menu-item index="1-4-1">A维度</el-menu-item>
+                    <el-menu-item index="1-4-2">B维度</el-menu-item>
+                    <el-menu-item index="1-4-3">C维度</el-menu-item>
+                </el-submenu>
+            </el-submenu>
+            <el-submenu index="2">
+                <template slot="title"><i class="el-icon-document white"></i>报告</template>
+                <el-submenu index="2-1">
+                    <template slot="title">预算</template>
+                    <el-menu-item index="2-1-6"><router-link to="/home/report/budgetAdjust">调整</router-link></el-menu-item>
+                    <el-menu-item index="2-1-1">详情</el-menu-item>
+                    <el-menu-item index="2-1-2">趋势</el-menu-item>
+                    <el-menu-item index="2-1-3">差额</el-menu-item>
+                    <el-menu-item index="2-1-4">制定</el-menu-item>
+                    <el-menu-item index="2-1-5">导入</el-menu-item>
+                </el-submenu>
+                <el-submenu index="2-2">
+                    <template slot="title">报告详情</template>
+                    <el-menu-item index="2-2-1">A维度</el-menu-item>
+                    <el-menu-item index="2-2-2">B维度</el-menu-item>
+                    <el-menu-item index="2-2-3">C维度</el-menu-item>
+                </el-submenu>
+            </el-submenu>
+            <el-submenu index="3">
+                <template slot="title"><i class="el-icon-setting white"></i>常用工具</template>
+                <el-submenu index="3-1">
+                    <template slot="title">管理</template>
+                    <el-menu-item index="3-1-1">备份信息查询</el-menu-item>
+                    <el-menu-item index="3-1-2">事件管理</el-menu-item>
+                    <el-menu-item index="3-1-3">订单管理</el-menu-item>
+                </el-submenu>
+            </el-submenu>
+            <el-submenu index="4">
+                <template slot="title"><i class="el-icon-menu white"></i>方案</template>
+                <el-submenu index="4-1">
+                    <template slot="title">架构</template>
+                    <el-menu-item index="4-1-1">专家支持</el-menu-item>
+                    <el-menu-item index="4-1-2">方案分享</el-menu-item>
+                    <el-menu-item index="4-1-3">团队介绍</el-menu-item>
+                </el-submenu>
+                <el-submenu index="4-2">
+                    <template slot="title">服务介绍</template>
+                    <el-menu-item index="4-2-1">服务一</el-menu-item>
+                    <el-menu-item index="4-2-2">服务二</el-menu-item>
+                    <el-menu-item index="4-2-3">服务三</el-menu-item>
+                </el-submenu>
+            </el-submenu>
+            <el-submenu index="user" class="el-right">
+                <template slot="title"><i class="el-icon-user white"></i>{{userName}}</template>
+                <el-menu-item index="user"><a href="/" target="_self">退出</a></el-menu-item>
+            </el-submenu>
+        </el-menu>
+        <div class="breadNav">
+            <el-breadcrumb separator="/">
+                <el-breadcrumb-item>{{currentNav.firstNav}}</el-breadcrumb-item>
+                <el-breadcrumb-item>{{currentNav.secNav}}</el-breadcrumb-item>
+                <el-breadcrumb-item>{{currentNav.thirdNav}}</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
+        <router-view></router-view>
+    </div>
+</template>
+
+<script>
+    import store from '@/store';
+    import {navList} from '@/navList';
+
+    export default {
+        name: 'home',
+        store,
+        data() {
+            return {
+                activeIndex: '2-1-6',
+                userName:store.state.userName,
+                currentNav:{
+                    firstNav:"报告",
+                    secNav:"预算",
+                    thirdNav:"调整",
+                },
+            };
+        },
+        mounted(){
+
+        },
+        methods: {
+            handleSelect(key, keyPath) {
+                this.currentNav.firstNav=navList[keyPath[0]];
+                this.currentNav.secNav=navList[keyPath[1]];
+                this.currentNav.thirdNav=navList[keyPath[2]];
+            }
+        },
+        components: {}
+    }
+</script>
+<style>
+    .el-right{
+        float: right !important;
+    }
+    .home .el-menu--horizontal>.el-submenu .el-submenu__title{
+        height: 50px;
+        line-height: 50px;
+        color: white;
+    }
+    .home .el-menu.el-menu--horizontal{
+        background-color: #070c41;
+        color: #ffffff;
+    }
+    .home .el-menu--horizontal>.el-menu-item:not(.is-disabled):focus,
+    .home .el-menu--horizontal>.el-menu-item:not(.is-disabled):hover,
+    .home .el-menu--horizontal>.el-submenu .el-submenu__title:hover {
+        background-color: #073e77;
+    }
+    .white{
+        color: white !important;
+    }
+    .breadNav{
+        padding: 14px 22px;
+    }
+</style>
