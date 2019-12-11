@@ -1,31 +1,25 @@
 <template>
     <div class="viewBox">
         <PanelTitle>预算调整</PanelTitle>
-        <PanelBody class="min-height">
+        <PanelBody>
             <el-form :inline="true" class="demo-form-inline">
                 <el-form-item class="mr-20">
-                    <el-select v-model="value" placeholder="请选择">
-                        <el-option
-                                v-for="item in options"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
+                    <el-select v-model="sysValue"  @change="getSysName" required>
+                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                         </el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item class="mr-20">
-                    <el-input v-model="input" :placeholder="placeText"></el-input>
+                    <el-autocomplete class="inline-input" v-model="sysName" :fetch-suggestions="querySearch"
+                                     :placeholder="placeTip" :trigger-on-focus="false"
+                                     @select="handleSelect" :maxlength=30></el-autocomplete>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="getData">查询</el-button>
                 </el-form-item>
             </el-form>
             <p v-if="tip" class="tip">{{tip}}</p>
-            <el-table
-                    :data="tableData"
-                    border
-                    stripe
-                    style="width: 100%">
+            <el-table :data="tableData" border stripe style="width: 100%">
                 <el-table-column type="expand">
                     <template slot-scope="props">
                         <el-form label-position="left" inline class="demo-table-expand">
@@ -48,41 +42,23 @@
                         </el-form>
                     </template>
                 </el-table-column>
-                <el-table-column
-                        label="年份"
-                        prop="year">
+                <el-table-column label="年份" prop="year">
                 </el-table-column>
-                <el-table-column
-                        label="对象名称"
-                        prop="objName">
+                <el-table-column label="对象名称" prop="objName">
                 </el-table-column>
-                <el-table-column
-                        label="环境"
-                        prop="env">
+                <el-table-column label="环境" prop="env">
                 </el-table-column>
-                <el-table-column
-                        label="数据库类型"
-                        prop="dbType">
+                <el-table-column label="数据库类型" prop="dbType">
                 </el-table-column>
-                <el-table-column
-                        label="编号"
-                        prop="number">
+                <el-table-column label="编号" prop="number">
                 </el-table-column>
-                <el-table-column
-                        label="单价"
-                        prop="price">
+                <el-table-column label="单价" prop="price">
                 </el-table-column>
-                <el-table-column
-                        label="预算"
-                        prop="budget">
+                <el-table-column label="预算" prop="budget">
                 </el-table-column>
-                <el-table-column
-                        label="状态"
-                        prop="status">
+                <el-table-column label="状态" prop="status">
                 </el-table-column>
-                <el-table-column
-                        label="操作"
-                        prop="">
+                <el-table-column label="操作" prop="">
                     <template slot-scope="scope">
                         <el-button type="primary" plain size="mini" :disabled='scope.row.status==="调整中"?true:false'
                                    @click="handleEdit(scope.$index, scope.row)">调整
@@ -90,34 +66,43 @@
                     </template>
                 </el-table-column>
             </el-table>
-            <el-pagination
-                    v-show="tableData.length>0"
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
-                    :current-page="currentPage"
-                    :page-sizes="[10, 20, 30]"
-                    :page-size="10"
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total="tableData.length">
+            <el-pagination v-show="tableData.length>0" @size-change="handleSizeChange"
+                           @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 30]"
+                           :page-size="10" layout="total, sizes, prev, pager, next, jumper"
+                           :total="tableData.length">
             </el-pagination>
             <el-dialog title="预算调整" :visible.sync="adjustTableVisible" width="70%">
-                <vxe-table
-                        highlight-hover-row
-                        :edit-config="{trigger: 'click', mode: 'cell'}"
-                        @edit-actived="editActivedEvent"
-                        @edit-closed="editClosedEvent"
-                        :footer-method="footerMethod"
-                        :footer-cell-class-name="footerCellClassName"
-                        class="editable-footer"
-                        ref="xTable"
-                        :data="adjustTableData">
+                <vxe-table highlight-hover-row :edit-config="{trigger: 'click', mode: 'cell'}"
+                           @edit-actived="editActivedEvent" @edit-closed="editClosedEvent" ref="xTable"
+                           :data="adjustTableData">
                     <vxe-table-column type="index" width="60"></vxe-table-column>
                     <vxe-table-column field="objName" title="对象名称"></vxe-table-column>
-                    <vxe-table-column field="actualSize" title="本月实际容量"></vxe-table-column>
-                    <vxe-table-column field="thisYearEnd" title="今年年底容量" :edit-render="{name: 'input', attrs: {type: 'number'},immediate: true, events: {input: updateFooterEvent}}"></vxe-table-column>
-                    <vxe-table-column field="nextYearEnd" title="明年年底容量" :edit-render="{name: 'input', attrs: {type: 'number'},immediate: true, events: {input: updateFooterEvent}}"></vxe-table-column>
-                    <vxe-table-column field="nextYearHalf" title="明年年中容量"></vxe-table-column>
+                    <vxe-table-column field="actualSize" title="本月实际容量"
+                                      :formatter="['toFixedString', 2]"></vxe-table-column>
+                    <vxe-table-column field="thisYearEnd" title="今年年底容量" :formatter="['toFixedString', 2]"
+                                      :edit-render="{name: 'input', attrs: {type: 'number'},immediate: true,}"></vxe-table-column>
+                    <vxe-table-column field="nextYearEnd" title="明年年底容量" :formatter="['toFixedString', 2]"
+                                      :edit-render="{name: 'input', attrs: {type: 'number'},immediate: true,}"></vxe-table-column>
+                    <vxe-table-column field="" title="明年年中容量">
+                        <template v-slot="{ row, rowIndex }">
+                            <span>{{((parseFloat(row.thisYearEnd)+parseFloat(row.nextYearEnd))/2).toFixed(2)}}</span>
+                        </template>
+                    </vxe-table-column>
                 </vxe-table>
+                <el-row type="flex" class="row-bg" justify="center">
+                    <el-col :span="8">
+                        <div class="grid-content"></div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content" style="text-align: center;margin-top: 20px;">
+                            <el-button @click="adjustTableVisible = false">取消</el-button>
+                            <el-button type="primary" @click="adjustTableVisible = false">提交</el-button>
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content"></div>
+                    </el-col>
+                </el-row>
             </el-dialog>
         </PanelBody>
     </div>
@@ -126,10 +111,17 @@
 <script>
     import PanelTitle from "../../components/PanelTitle";
     import PanelBody from '../../components/PanelBody';
+    import {
+        Suggest
+    } from 'v-suggest';
 
     export default {
         name: "budgetAdjust",
-        components: {PanelTitle, PanelBody},
+        components: {
+            PanelTitle,
+            PanelBody,
+            "v-suggest": Suggest,
+        },
         data() {
             return {
                 true: true,
@@ -140,17 +132,23 @@
                     value: 'subsystem',
                     label: '子系统'
                 }],
-                value: '',
+                sysValue: 'database',
                 input: '',
                 placeText: '',
                 tableData: [],
-                adjustTableData:[],
+                adjustTableData: [],
                 tip: "",
                 currentPage: 1,
                 adjustTableVisible: false,
+                sysName: "",        //state2: ''
+                sysNameList: [],   // restaurants: [],
+                dbNameList: [],
+                subNameList: [],
+                placeTip:"请输入数据库名称",
             }
         },
         mounted() {
+            this.getSysNameList();
         },
         methods: {
             handleEdit(index, row) {
@@ -166,9 +164,13 @@
 
             },
             getData() {
-                if (this.value !== '' && this.input !== '') {
+                if (this.sysValue !== '' && this.sysName !== '') {
                     this.tip = '';
-                    this.axios.post('/api/report/budgetAdjust/', {params: {obj: "name111"}})
+                    this.axios.post('/api/report/budgetAdjust/', {
+                        params: {
+                            obj: "name111"
+                        }
+                    })
                         .then((res) => {
                             this.tableData = res.data;
                         })
@@ -185,47 +187,64 @@
             handleCurrentChange(val) {
                 console.log(`当前页: ${val}`);
             },
-            editActivedEvent ({ row, column }, event) {
+            editActivedEvent({
+                                 row,
+                                 column
+                             }, event) {
                 console.log(`打开 ${column.title} 列编辑`)
             },
-            editClosedEvent ({ row, column }, event) {
+            editClosedEvent({
+                                row,
+                                column
+                            }, event) {
                 console.log(`关闭 ${column.title} 列编辑`)
             },
-            footerCellClassName ({ $rowIndex, column, columnIndex }) {
-                if (columnIndex === 0) {
-                    if ($rowIndex === 0) {
-                        return 'col-blue'
-                    } else {
-                        return 'col-red'
-                    }
+            async getSysNameList() {
+                await this.axios.get('/api/report/budgetAdjust/dbname', {})
+                    .then((res) => {
+                        this.dbNameList = res.data;
+                        this.sysNameList = this.dbNameList;
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    });
+                this.axios.get('/api/report/budgetAdjust/subname', {})
+                    .then((res) => {
+                        return this.subNameList = res.data;
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+            },
+            getSysName() {
+                let selectName = this.sysValue;
+                this.sysName = "";
+                if(selectName === "database"){
+                    this.sysNameList = this.dbNameList;
+                }else{
+                    this.sysNameList = this.subNameList;
+                    this.placeTip = "请输入子系统名称";
                 }
             },
-            footerMethod ({ columns, data }) {
-                return [
-                    columns.map((column, columnIndex) => {
-                        if (columnIndex === 0) {
-                            return '和值'
-                        }
-                        if (['actualSize', 'thisYearEnd','nextYearEnd','nextYearHalf'].includes(column.property)) {
-                            return this.$utils.sum(data, column.property)
-                        }
-                        return null
-                    })
-                ]
+            querySearch(queryString, cb) {
+                var sysNameList = this.sysNameList;
+                var results = queryString ? sysNameList.filter(this.createFilter(queryString)) : sysNameList;
+                // 调用 callback 返回建议列表的数据
+                cb(results);
             },
-            updateFooterEvent (params) {
-                let xTable = this.$refs.xTable;
-                xTable.updateFooter()
+            createFilter(queryString) {
+                return (sysNameList) => {
+                    return (sysNameList.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+                };
             },
+            handleSelect(item) {
+                console.log(item);
+            }
         },
     }
 </script>
 
 <style scoped>
-    .min-height {
-        min-height: 386px;
-    }
-
     .demo-table-expand {
         font-size: 0;
     }
@@ -240,7 +259,8 @@
         margin-bottom: 0;
         width: 50%;
     }
-    .el-dialog{
+
+    .el-dialog {
         width: 70%;
     }
 </style>

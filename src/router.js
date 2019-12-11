@@ -21,6 +21,7 @@ export default new Router({
             component: () => import('./views/Home.vue'),
             children:[
                 { path:'service/disability/a' , name:'disabiltyA' , component:()=>import('./views/Service/Disability')},
+                { path:'service/ability' , name:'ability' , component:()=>import('./views/Service/Ability')},
                 { path:'report/budgetAdjust' , name:'budgetAdjust' , component:()=>import('./views/Report/BudgetAdjust')},
                 { path:'construction' , name:'construction' , component:()=>import('./views/Construction')},
             ],

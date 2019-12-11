@@ -16,5 +16,6 @@
     border:1px solid #92c9ec;
     font-size: 14px;
     padding: 10px;
+    min-height: 386px;
 }
 </style>
