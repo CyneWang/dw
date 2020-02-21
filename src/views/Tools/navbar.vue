@@ -1,6 +1,7 @@
 <template>
     <div class="home">
-        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal"
+                 @select="handleSelect">
             <el-submenu index="1">
                 <template slot="title"><i class="el-icon-box white"></i>服务</template>
                 <el-submenu index="1-2">
@@ -14,9 +15,15 @@
                 </el-menu-item>
                 <el-submenu index="1-4">
                     <template slot="title">性能对比</template>
-                    <el-menu-item index="1-4-1"><router-link to="/home/construction">A维度</router-link></el-menu-item>
-                    <el-menu-item index="1-4-2"><router-link to="/home/construction">B维度</router-link></el-menu-item>
-                    <el-menu-item index="1-4-3"><router-link to="/home/construction">C维度</router-link></el-menu-item>
+                    <el-menu-item index="1-4-1">
+                        <router-link to="/home/service/abilityCompareA">A维度</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="1-4-2">
+                        <router-link to="/home/service/abilityCompareB">B维度</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="1-4-3">
+                        <router-link to="/home/service/abilityCompareC">C维度</router-link>
+                    </el-menu-item>
                 </el-submenu>
             </el-submenu>
             <el-submenu index="2">
@@ -26,41 +33,75 @@
                     <el-menu-item index="2-1-6">
                         <router-link to="/home/report/budgetAdjust">调整</router-link>
                     </el-menu-item>
-                    <el-menu-item index="2-1-1"><router-link to="/home/construction">详情</router-link></el-menu-item>
-                    <el-menu-item index="2-1-2"><router-link to="/home/construction">趋势</router-link></el-menu-item>
-                    <el-menu-item index="2-1-3"><router-link to="/home/construction">差额</router-link></el-menu-item>
-                    <el-menu-item index="2-1-4"><router-link to="/home/construction">制定</router-link></el-menu-item>
-                    <el-menu-item index="2-1-5"><router-link to="/home/construction">导入</router-link></el-menu-item>
+                    <el-menu-item index="2-1-1">
+                        <router-link to="/home/construction">详情</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="2-1-2">
+                        <router-link to="/home/construction">趋势</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="2-1-3">
+                        <router-link to="/home/construction">差额</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="2-1-4">
+                        <router-link to="/home/construction">制定</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="2-1-5">
+                        <router-link to="/home/construction">导入</router-link>
+                    </el-menu-item>
                 </el-submenu>
                 <el-submenu index="2-2">
                     <template slot="title">报告详情</template>
-                    <el-menu-item index="2-2-1"><router-link to="/home/construction">A维度</router-link></el-menu-item>
-                    <el-menu-item index="2-2-2"><router-link to="/home/construction">B维度</router-link></el-menu-item>
-                    <el-menu-item index="2-2-3"><router-link to="/home/construction">C维度</router-link></el-menu-item>
+                    <el-menu-item index="2-2-1">
+                        <router-link to="/home/construction">A维度</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="2-2-2">
+                        <router-link to="/home/construction">B维度</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="2-2-3">
+                        <router-link to="/home/construction">C维度</router-link>
+                    </el-menu-item>
                 </el-submenu>
             </el-submenu>
             <el-submenu index="3">
                 <template slot="title"><i class="el-icon-setting white"></i>常用工具</template>
                 <el-submenu index="3-1">
                     <template slot="title">管理</template>
-                    <el-menu-item index="3-1-1"><router-link to="/home/construction">备份信息查询</router-link></el-menu-item>
-                    <el-menu-item index="3-1-2"><router-link to="/home/construction">事件管理</router-link></el-menu-item>
-                    <el-menu-item index="3-1-3"><router-link to="/home/construction">订单管理</router-link></el-menu-item>
+                    <el-menu-item index="3-1-1">
+                        <router-link to="/home/construction">备份信息查询</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="3-1-2">
+                        <router-link to="/home/construction">事件管理</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="3-1-3">
+                        <router-link to="/home/construction">订单管理</router-link>
+                    </el-menu-item>
                 </el-submenu>
             </el-submenu>
             <el-submenu index="4">
                 <template slot="title"><i class="el-icon-menu white"></i>方案</template>
                 <el-submenu index="4-1">
                     <template slot="title">架构</template>
-                    <el-menu-item index="4-1-1"><router-link to="/home/construction">专家支持</router-link></el-menu-item>
-                    <el-menu-item index="4-1-2"><router-link to="/home/construction">方案分享</router-link></el-menu-item>
-                    <el-menu-item index="4-1-3"><router-link to="/home/construction">团队介绍</router-link></el-menu-item>
+                    <el-menu-item index="4-1-1">
+                        <router-link to="/home/construction">专家支持</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="4-1-2">
+                        <router-link to="/home/construction">方案分享</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="4-1-3">
+                        <router-link to="/home/construction">团队介绍</router-link>
+                    </el-menu-item>
                 </el-submenu>
                 <el-submenu index="4-2">
                     <template slot="title">服务介绍</template>
-                    <el-menu-item index="4-2-1"><router-link to="/home/construction">服务一</router-link></el-menu-item>
-                    <el-menu-item index="4-2-2"><router-link to="/home/construction">服务二</router-link></el-menu-item>
-                    <el-menu-item index="4-2-3"><router-link to="/home/construction">服务三</router-link></el-menu-item>
+                    <el-menu-item index="4-2-1">
+                        <router-link to="/home/construction">服务一</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="4-2-2">
+                        <router-link to="/home/construction">服务二</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="4-2-3">
+                        <router-link to="/home/construction">服务三</router-link>
+                    </el-menu-item>
                 </el-submenu>
             </el-submenu>
             <el-submenu index="user" class="el-right">
@@ -87,7 +128,7 @@
         store,
         data() {
             return {
-                activeIndex: '2-1-6',
+                activeIndex: store.state.navIndex,
                 userName: store.state.userName,
                 currentNav: {
                     firstNav: "报告",
@@ -101,33 +142,48 @@
                 this.currentNav.firstNav = navList[keyPath[0]];
                 this.currentNav.secNav = navList[keyPath[1]];
                 this.currentNav.thirdNav = navList[keyPath[2]];
-            }
+
+                store.state.navIndex = store.commit('navyIndex',this.activeIndex);
+                console.log("ddd",this.activeIndex);
+                console.log("aaa",store.state.navIndex);
+            },
+        },
+        watch: {
+
+        },
+        mounted(){
+            // console.log("store",this.$store.state.navIndex);
         },
     }
 </script>
 
 <style>
-    .el-right{
+    .el-right {
         float: right !important;
     }
-    .home .el-menu--horizontal>.el-submenu .el-submenu__title{
+
+    .home .el-menu--horizontal > .el-submenu .el-submenu__title {
         height: 50px;
         line-height: 50px;
         color: white;
     }
-    .home .el-menu.el-menu--horizontal{
+
+    .home .el-menu.el-menu--horizontal {
         background-color: #070c41;
         color: #ffffff;
     }
-    .home .el-menu--horizontal>.el-menu-item:not(.is-disabled):focus,
-    .home .el-menu--horizontal>.el-menu-item:not(.is-disabled):hover,
-    .home .el-menu--horizontal>.el-submenu .el-submenu__title:hover {
+
+    .home .el-menu--horizontal > .el-menu-item:not(.is-disabled):focus,
+    .home .el-menu--horizontal > .el-menu-item:not(.is-disabled):hover,
+    .home .el-menu--horizontal > .el-submenu .el-submenu__title:hover {
         background-color: #073e77;
     }
-    .white{
+
+    .white {
         color: white !important;
     }
-    .breadNav{
+
+    .breadNav {
         padding: 14px 22px;
     }
 </style>

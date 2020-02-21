@@ -150,7 +150,7 @@
                         avoidLabelOverlap: false,
                         label: {
                             show: false,
-                            formatter: "{d}%",
+                            formatter: "{b}\n{d}%",
                             position: "center",
                             lineHeight: 20,
                             emphasis: {

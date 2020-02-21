@@ -42,8 +42,38 @@ function abilityWatch() {
 
     Mock.mock(`/api/service/abilityWatch`, 'get', dataList);
 }
+//性能对比
+function abilityCompare() {
+    let dataList = {
+        chart1: {},
+        chart2: {},
+        chart3: {},
+        chart4: {},
+    };
+    dataList.chart1 = {
+        "id|+1": 1, //id，自增1
+        "data|7": ["@natural(100, 1000)"],
+    };
+    dataList.chart2 = {
+        "id|+1": 1, //id，自增1
+        "data|7": ["@natural(100, 1000)"],
+    };
+    dataList.chart3 = {
+        "id|+1": 1, //id，自增1
+        "data|7": ["@natural(100, 1000)"],
+    };
+    dataList.chart4 = {
+        "id|+1": 1, //id，自增1
+        "data1|7": ["@natural(100, 1000)"],
+        "data2|7": ["@natural(100, 1000)"],
+        "data3|7": ["@natural(100, 1000)"],
+        "data4|7": ["@natural(100, 1000)"],
+    };
 
+    Mock.mock(`/api/service/abilityCompare`, 'get', dataList);
+}
 abilityWatch();
+abilityCompare();
 
 //报告-预算-调整API
 function budgetAdjustDBNameAPI() {

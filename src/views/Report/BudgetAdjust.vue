@@ -4,7 +4,7 @@
         <PanelBody>
             <el-form :inline="true" class="demo-form-inline">
                 <el-form-item class="mr-20">
-                    <el-select v-model="sysValue"  @change="getSysName" required>
+                    <el-select v-model="sysValue"  @change="getSysName">
                         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                         </el-option>
                     </el-select>

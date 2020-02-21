@@ -22,6 +22,9 @@ export default new Router({
             children:[
                 { path:'service/disability/a' , name:'disabiltyA' , component:()=>import('./views/Service/Disability')},
                 { path:'service/ability' , name:'ability' , component:()=>import('./views/Service/Ability')},
+                { path:'service/abilityCompareA' , name:'abilityCompareA' , component:()=>import('./views/Service/abilityCompareA')},
+                { path:'service/abilityCompareB' , name:'abilityCompareB' , component:()=>import('./views/Service/abilityCompareB')},
+                { path:'service/abilityCompareC' , name:'abilityCompareC' , component:()=>import('./views/Service/abilityCompareC')},
                 { path:'report/budgetAdjust' , name:'budgetAdjust' , component:()=>import('./views/Report/BudgetAdjust')},
                 { path:'construction' , name:'construction' , component:()=>import('./views/Construction')},
             ],
