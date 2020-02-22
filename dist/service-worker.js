@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.de98619c8cbef81b8f75024707970c67.js"
+  "precache-manifest.668202c14715a98fadcf10532bc4671a.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "dwm"});
