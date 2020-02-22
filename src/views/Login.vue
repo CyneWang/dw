@@ -3,9 +3,8 @@
         <el-row>
             <el-col :span="12">
                 <div class="imgBox">
-                    <img src="../assets/img/numberList.png" alt="" class="numberList">
-                    <img src="../assets/img/lightTop(1).png" alt="" class="lightTop">
-                    <img class="building" src="../assets/img/building.png"/>
+                    <img class="building" src="../assets/img/science.png"/>
+                    <div class="radius"></div>
                 </div>
             </el-col>
             <el-col :span="12">
@@ -51,7 +50,7 @@
                     this.$router.push('/home/report/budgetAdjust');
                     this.tip = '';
                 } else {
-                    this.tip = '用户名或密码不能为空！'
+                    this.tip = '用户名或密码请随意填写，但不能为空！'
                 }
             }
         },
@@ -82,9 +81,9 @@
     }
 
     .building {
-        width: 80%;
+        width: 106%;
         position: absolute;
-        left: 40px;
+        left: 60px;
         top: 50%;
         margin-top: -160px;
     }
@@ -107,6 +106,7 @@
         width: 100%;
         position: absolute;
         bottom: 0;
+        left: -66px;
     }
 
     .bottomHeight {
@@ -155,9 +155,17 @@
         border: 1px solid #0b8ab9;
     }
 
-    .tip {
+    .demo-input-suffix .tip {
         margin-top: 0;
         font-size: 14px;
         color: #bf0404;
+    }
+    .radius{
+        width: 322px;
+        height: 284px;
+        position: absolute;
+        top: 28%;
+        left: 58%;
+        background-image: radial-gradient(#131a63 0%, rgba(0,0,0,0) 60%);
     }
 </style>
